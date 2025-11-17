@@ -1,0 +1,85 @@
+[gd_scene load_steps=6 format=3 uid="uid://bd7nlitqdlr8w"]
+
+[ext_resource type="Script" path="res://image_logic.gd" id="1_y3tal"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_3mkx7"]
+
+[sub_resource type="Gradient" id="Gradient_x3mwm"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_7d4th"]
+noise_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_11qul"]
+width = 16
+height = 16
+color_ramp = SubResource("Gradient_x3mwm")
+noise = SubResource("FastNoiseLite_7d4th")
+
+[node name="Node2D" type="Node2D"]
+texture_filter = 2
+script = ExtResource("1_y3tal")
+seed = null
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="SeedInput" type="Node2D" parent="."]
+position = Vector2(-574, -264)
+
+[node name="TextEdit" type="TextEdit" parent="SeedInput"]
+offset_left = -1.0
+offset_top = 85.0
+offset_right = 318.0
+offset_bottom = 122.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="SeedInput"]
+offset_top = 56.0
+offset_right = 318.0
+offset_bottom = 85.0
+text = "seed:"
+metadata/_edit_use_anchors_ = true
+
+[node name="PatternResolutionInput" type="Node2D" parent="."]
+position = Vector2(-574, 0)
+
+[node name="Label" type="Label" parent="PatternResolutionInput"]
+texture_filter = 2
+offset_top = -324.0
+offset_right = 318.0
+offset_bottom = -259.0
+text = "Resolution of generated pattern"
+
+[node name="HSlider" type="HSlider" parent="PatternResolutionInput"]
+offset_left = 1.0
+offset_top = -300.0
+offset_right = 317.0
+offset_bottom = -257.0
+min_value = 1.0
+max_value = 10.0
+value = 4.0
+
+[node name="Label2" type="Label" parent="PatternResolutionInput"]
+offset_top = -264.0
+offset_right = 318.0
+offset_bottom = -222.0
+
+[node name="Button" type="Button" parent="."]
+texture_filter = 2
+offset_left = -59.0
+offset_top = 276.0
+offset_right = 59.0
+offset_bottom = 324.0
+text = "export"
+
+[node name="generatedPatternDisplay" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(32, 32)
+texture = SubResource("ViewportTexture_3mkx7")
+
+[node name="generatedPattern" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+scale = Vector2(32, 32)
+texture = SubResource("NoiseTexture2D_11qul")
+
+[connection signal="pressed" from="Button" to="generatedPattern" method="_on_button_pressed"]
